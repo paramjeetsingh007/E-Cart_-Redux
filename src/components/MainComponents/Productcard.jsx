@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Product from "../../api/ProductApi";
+import { useDispatch } from "react-redux";
+import { addTocart } from "../../redux/features/CartSlice";
 
 function Productcard() {
   const [products,setProducts] = useState([])
+  const dispatch= useDispatch()
+
   useEffect(() => {
     async function fetchProducts() {
       const data = await Product();
@@ -11,9 +15,16 @@ function Productcard() {
     }
     fetchProducts();  
   }, []);
+
+  function Additem(item){
+    dispatch(addTocart(item))
+
+  }
+
   return (
   <div className="flex flex-wrap justify-center gap-6 p-4">
     {products.map((item) => (
+      
       <div
         key={item.id}
         className="w-72 bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
@@ -52,15 +63,15 @@ function Productcard() {
             </span>
           </div>
 
-          {/* <div className="mt-4 flex gap-2">
-            <button className="flex-1 bg-[var(--secondary)] text-white py-2 rounded-lg">
+          <div className="mt-4 flex gap-2">
+            <button className="flex-1 bg-[var(--secondary)] text-white py-2 rounded-lg" onClick={()=>Additem(item)}>
               Add Cart
             </button>
 
             <button className="flex-1 border border-[var(--secondary)] text-[var(--secondary)] py-2 rounded-lg hover:bg-[var(--secondary)] hover:text-white">
               Buy Now
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     ))}

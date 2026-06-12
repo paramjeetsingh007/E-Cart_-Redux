@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   query: '',
   count: 0,
-  items: []
+  items:[]
 }
 
 export const cartSlice = createSlice({
@@ -25,6 +25,7 @@ export const cartSlice = createSlice({
     addTocart: (state,action) => {
         state.items.push(action.payload)
         state.count += 1
+        localStorage.setItem('cart',JSON.stringify(state.items))
     },
     removeFromCart: (state,action) => {
         state.items= state.items.filter(item=> item.id!==action.payload.id)
