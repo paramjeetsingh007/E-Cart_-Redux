@@ -10,6 +10,11 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    addQuery:(state,action)=>{
+        state.query=action.payload
+        
+
+    },
     increment: (state,action) => {
   
       state.count += 1
@@ -30,6 +35,6 @@ export const cartSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, addTocart, removeFromCart } = cartSlice.actions
+export const { increment, decrement, addTocart, addQuery,removeFromCart } = cartSlice.actions
 
 export default cartSlice.reducer

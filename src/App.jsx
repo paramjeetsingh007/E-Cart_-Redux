@@ -1,6 +1,7 @@
 
 import './App.css'
 import Header from './components/MainComponents/Header'
+import Productcard from './components/MainComponents/Productcard'
 
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
     <Header/>
+    <Productcard/>
     
     </>
   )
