@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 function Searchbar() {
    const [text,setText]=useState('')
    const dispatch= useDispatch()
+   
 
     function handleSubmit(e) {
         e.preventDefault();

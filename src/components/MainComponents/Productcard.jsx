@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Product from "../../api/ProductApi";
-import { useDispatch } from "react-redux";
-import { addTocart } from "../../redux/features/CartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addTocart , addToast } from "../../redux/features/CartSlice";
 
 function Productcard() {
   const [products,setProducts] = useState([])
   const dispatch= useDispatch()
 
+  const query=useSelector((state)=>state.cart.query)
+
+const filteredProducts = products.filter((item) =>
+  item.title.toLowerCase().includes(query.toLowerCase())
+);
   useEffect(() => {
     async function fetchProducts() {
       const data = await Product();
@@ -18,12 +23,13 @@ function Productcard() {
 
   function Additem(item){
     dispatch(addTocart(item))
+    dispatch(addToast())
 
   }
 
   return (
   <div className="flex flex-wrap justify-center gap-6 p-4">
-    {products.map((item) => (
+    {filteredProducts.map((item) => (
       
       <div
         key={item.id}
