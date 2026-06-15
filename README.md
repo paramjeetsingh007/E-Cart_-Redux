@@ -2,7 +2,7 @@
 
 A modern e-commerce shopping cart application built with **React** and **Redux Toolkit**.
 
-🔗 **Live Demo:** [https://e-cart-redux-git-main-paramjeetsingh007s-projects.vercel.app/](https://e-cart-redux-git-main-paramjeetsingh007s-projects.vercel.app/)
+🔗 **Live Demo:** [https://e-cart-redux-ashy.vercel.app/](https://e-cart-redux-ashy.vercel.app/)
 
 ---
 
