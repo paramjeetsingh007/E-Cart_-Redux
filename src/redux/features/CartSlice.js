@@ -5,7 +5,9 @@ const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
 const initialState = {
   query: '',
   count: savedCart.length,
-  items: savedCart
+  items: savedCart,
+   
+
 }
 
 export const cartSlice = createSlice({
@@ -18,26 +20,53 @@ export const cartSlice = createSlice({
 
     },
     increment: (state, action) => {
-
-      state.count += 1
+      const item = state.items.find((item) => item.id === action.payload.id);
+      if (item) {
+        item.quantity += 1;
+        localStorage.setItem('cart', JSON.stringify(state.items));
+      }
     },
+
     decrement: (state, action) => {
-      state.count -= 1
+      const item = state.items.find((item) => item.id === action.payload.id);
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+        } else {
+          // Agar quantity 1 hai toh item remove kar do
+          state.items = state.items.filter((i) => i.id !== action.payload.id);
+          state.count = state.items.length;
+        }
+        localStorage.setItem('cart', JSON.stringify(state.items));
+      }
     },
     addTocart: (state, action) => {
       const existingItem = state.items.find((item) => item.id === action.payload.id)
       if (!existingItem) {
-        state.items.push(action.payload)
+        state.items.push({ ...action.payload, quantity: 1 })
         state.count += 1
         localStorage.setItem('cart', JSON.stringify(state.items))
       }
 
+
     },
     removeFromCart: (state, action) => {
       state.items = state.items.filter(item => item.id !== action.payload.id)
-      state.count =state.items.length
-      localStorage.setItem('cart',JSON.stringify(state.items))
+      state.count = state.items.length
+      localStorage.setItem('cart', JSON.stringify(state.items))
 
+    },
+    clearCart: (state) => {
+      state.items = [];
+      state.count = 0;
+      localStorage.removeItem('cart');
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload.method;
+      state.totalAmount = action.payload.totalAmount; // ✅ amount save karo
+      console.log(state.totalAmount);
+      
+      state.currentStep = 3;
     },
     addToast: (state, action) => {
       toast.success('Product add ✅', {
@@ -57,6 +86,6 @@ export const cartSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, addTocart, addToast, addQuery, removeFromCart } = cartSlice.actions
+export const { increment, decrement, addTocart, addToast, addQuery, removeFromCart, clearCart } = cartSlice.actions
 
 export default cartSlice.reducer
